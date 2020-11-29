@@ -64,18 +64,19 @@ public:
 
     QTime Start();
     void setStart(QTime value);
-
     QTime End();
     void setEnd(QTime value);
+    QString secondsToString();
 
     int DimensionFrom();
     void setDimensionFrom(int value);
 
     int DimensionTo();
     void setDimensionTo(int value);
-
     float Temperature();
     void setTemperature(float value);
+    QString dimensionsToString();
+
 
     QString Description();
     void setDescription(QString text);

@@ -133,15 +133,14 @@ QVariant Model::dataDisplay(const QModelIndex &index) const
     case 3: return item->Code_year();
     case 4: return item->Person();
     case 5: return item->Density_display();
-    case 6: return item->Type() != "Sugar" ? item->Density() : item->Density() + 15;
+    case 6: return item->Type() != "Sugar" ? item->Density() : item->Density() + 20;
     case 7: return item->Juice();
     case 8: return item->Type();
     case 9: return item->Start().isValid() ? item->Start().toString("hh.mm") : "";
     case 10: return item->End().isValid() ? item->End().toString("hh.mm") : "";
-    case 11: return item->DimensionFrom();
-    case 12: return item->DimensionTo();
-    case 13: return item->Temperature();
-    case 14: return item->Description();
+    case 11: return item->secondsToString();
+    case 12: return item->dimensionsToString();
+    case 13: return item->Description();
     default: return QVariant();
     }
 }
@@ -224,7 +223,7 @@ int Model::rowCount(const QModelIndex &parent) const
 int Model::columnCount(const QModelIndex &parent) const
 {
     if(!parent.isValid()){
-        return 15;
+        return 14;
     } else {
         return 0;
     }
@@ -253,19 +252,18 @@ QVariant Model::headerData(int section, Qt::Orientation orientation, int role) c
         switch (section) {
         case 0: return tr("Индекс");
         case 1: return tr("Дата");
-        case 2: return tr("Номер");
+        case 2: return tr("№");
         case 3: return tr("Номер2");
         case 4: return tr("Варщик");
-        case 5: return tr("Плотность 1");
-        case 6: return tr("Плотность 2");
+        case 5: return tr("Плотность");
+        case 6: return tr("Давл");
         case 7: return tr("Сок");
         case 8: return tr("Тип пасты");
         case 9: return tr("Начало");
         case 10: return tr("Конец");
-        case 11: return tr("От");
-        case 12: return tr("До");
-        case 13: return tr("Температура");
-        case 14: return tr("Комментарии");
+        case 11: return tr("Время");
+        case 12: return tr("Измерения");
+        case 13: return tr("Комментарии");
         default: return QVariant();
         }
     case Qt::TextAlignmentRole:

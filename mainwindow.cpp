@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
             this, SLOT(clearBoxes()));
 
     //Initialize our API data
-    const QUrl API_ENDPOINT("http://myserver.ru");
+    const QUrl API_ENDPOINT("http://vladimir-bervin.myjino.ru/var/var.json");
     QNetworkRequest request;
     request.setUrl(API_ENDPOINT);
     mNetReply = mNetManager->get(request);
@@ -61,7 +61,7 @@ void MainWindow::createUI()
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableView->setSelectionMode(QAbstractItemView::SingleSelection);
 
-    ui->tableView->horizontalHeader()->setSectionResizeMode(14, QHeaderView::Stretch);
+    ui->tableView->horizontalHeader()->setSectionResizeMode(13, QHeaderView::Stretch);
     ui->tableView->resizeColumnToContents(2);
     ui->tableView->resizeColumnToContents(5);
     ui->tableView->resizeColumnToContents(6);

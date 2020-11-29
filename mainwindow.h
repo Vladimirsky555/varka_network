@@ -46,6 +46,7 @@ private slots:
     void clearBoxes();
     void on_tableView_doubleClicked(const QModelIndex &index);
 
+
 signals:
     void sendPattern(QString);//для подстветки
     void shutdown();
