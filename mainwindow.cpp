@@ -40,7 +40,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->dateEdit_m->setDate(QDate::currentDate());
     QPixmap pix(":/images/pix.jpg");
     ui->label_pix->setPixmap(pix.scaledToWidth(250));
-    fillBoxes();
 }
 
 MainWindow::~MainWindow()
@@ -81,7 +80,7 @@ void MainWindow::on_btnAll_clicked()
 {
     M->clearItems();//очищаем модель перед поиском
     M->setItems(M->All_Items());//Заполняем модель всеми данными
-    M->selectAll();//Обновляем представление
+    M->selectAll();
 }
 
 void MainWindow::on_btnSearch_clicked()
@@ -113,21 +112,7 @@ void MainWindow::on_btnSearch_clicked()
         flag = 3;
     }
 
-    if(ui->cbxPerson_m->currentIndex() == 0){
-        person = "---";
-    } else if(ui->cbxPerson_m->currentIndex() == 1){
-        person = "Артём";
-    }else if(ui->cbxPerson_m->currentIndex() == 2){
-        person = "Александр";
-    }else if(ui->cbxPerson_m->currentIndex() == 3){
-        person = "Владимир";
-    }else if(ui->cbxPerson_m->currentIndex() == 4){
-        person = "Яков";
-    }else if(ui->cbxPerson_m->currentIndex() == 5){
-        person = "Бато";
-    } else if(ui->cbxPerson_m->currentIndex() == 5){
-        person = "Аноним";
-    }
+    person = lst.at(ui->cbxPerson_m->currentIndex());
 
     if(ui->cbxType_m->currentIndex() == 0){
         type = "---";
@@ -181,13 +166,7 @@ void MainWindow::on_btnSearch_clicked()
 
 void MainWindow::fillBoxes()
 {
-    ui->cbxPerson_m->addItem("---");
-    ui->cbxPerson_m->addItem("Артём");
-    ui->cbxPerson_m->addItem("Александр");
-    ui->cbxPerson_m->addItem("Владимир");
-    ui->cbxPerson_m->addItem("Яков");
-    ui->cbxPerson_m->addItem("Бато");
-    ui->cbxPerson_m->addItem("Аноним");
+    ui->cbxPerson_m->addItems(lst);
 
     ui->cbxDensity_m->addItem("-------");
     ui->cbxDensity_m->addItem("0 (bandage)");
@@ -212,6 +191,7 @@ bool MainWindow::check_index(int index)
 
     return true;
 }
+
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
@@ -242,6 +222,8 @@ void MainWindow::on_tableView_doubleClicked(const QModelIndex &index)
 
 void MainWindow::finishWorker()
 {
+    lst = M->defineLstPerson();//Извлекаем список варщиков из данных
+    fillBoxes();//Заполняем комбобоксы и получаем список варщиков для поиска
     M->setAllItems();
     createUI();
 }

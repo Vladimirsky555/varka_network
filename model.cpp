@@ -31,6 +31,30 @@ QList<Data *> *Model::All_Items()
     return this->all_items;
 }
 
+QStringList Model::defineLstPerson()
+{
+    lst.append("---");
+
+    for(int i = 0; i < items->count(); i++)
+    {
+        if(!lst.contains(items->at(i)->Person())){
+            lst.push_back(items->at(i)->Person());
+        } else {
+            continue;
+        }
+    }
+
+    return lst;
+}
+
+void Model::setItems(QList<Data *> *items)
+{
+    this->items->clear();
+    for(int i = 0; i < items->count(); i++){
+        this->items->append(items->at(i));
+    }
+}
+
 bool Model::checkReport(QString pattern, QString report)
 {
     QRegExp rx(pattern);
@@ -53,14 +77,6 @@ void Model::addItem(Data *item)
 }
 
 
-void Model::setItems(QList<Data *> *items)
-{
-    this->items->clear();
-    for(int i = 0; i < items->count(); i++){
-        this->items->append(items->at(i));
-    }
-}
-
 
 //Используется один раз при загрузке данных для копирования
 void Model::setAllItems()
@@ -68,11 +84,22 @@ void Model::setAllItems()
     for(int i = 0; i < items->count(); i++){
         this->all_items->append(items->at(i));
     }
+
 }
 
 void Model::clearItems()
 {
     items->clear();
+}
+
+int Model::getCount()
+{
+    return items->count();
+}
+
+Data *Model::Item(int id)
+{
+    return items->at(id);
 }
 
 

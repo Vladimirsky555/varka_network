@@ -6,6 +6,7 @@
 #include <QNetworkReply>
 
 #include "model.h"
+#include "jsonworker.h"
 
 class Worker : public QThread
 {  
@@ -16,7 +17,7 @@ class Worker : public QThread
     QByteArray  arr;
 
 public:
-    Worker(QObject *parent = 0);
+    Worker(QObject *parent = 0){}
 
     void setModel(Model *model);
     void setArr(QByteArray arr);
@@ -27,7 +28,6 @@ private slots:
 
 signals:
     void workFinished();
-//    void insert_to_db(Data*);
     void sendCount(int);
 
     // QThread interface

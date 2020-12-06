@@ -24,6 +24,7 @@ class MainWindow : public QMainWindow
     QNetworkAccessManager * mNetManager;
     QNetworkReply * mNetReply;
     QByteArray  arr;
+    QStringList lst;//Список варщиков
 
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -32,7 +33,6 @@ public:
     void createUI();
     void fillBoxes();
     bool check_index(int index);
-
 
 private slots:
     void dataReadyRead();
@@ -45,7 +45,6 @@ private slots:
     void on_edtPattern_m_textChanged(const QString &str);
     void clearBoxes();
     void on_tableView_doubleClicked(const QModelIndex &index);
-
 
 signals:
     void sendPattern(QString);//для подстветки

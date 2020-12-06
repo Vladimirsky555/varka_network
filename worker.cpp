@@ -3,16 +3,14 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QJsonObject>
-#include <QVariantMap>
+
+#include <QThreadPool>
+#include <QMutex>
+
 #include <QDebug>
 
 #include "data.h"
 
-Worker::Worker(QObject *parent) :
-    QThread(parent)
-{
-
-}
 
 void Worker::setModel(Model *model)
 {
@@ -39,35 +37,25 @@ void Worker::dataReadFinished()
        QJsonDocument doc = QJsonDocument::fromJson(arr);
        QJsonArray array = doc.array();
 
+       QThreadPool* pool = QThreadPool::globalInstance();
+       QMutex mutex(QMutex::Recursive);
+
        for ( int i = 0; i < array.size(); i++)
        {
            QJsonObject object = array.at(i).toObject();
-           QVariantMap map = object.toVariantMap();
 
-           Data *D = new Data();
-           QDate Date;
-
-           D->setId(map["id"].toInt());
-           D->setCode_all(map["code_all"].toInt());
-           D->setCode_year(map["code_year"].toInt());                   
-           D->setDate(Date.fromString(map["date"].toString(),"dd.MM.yyyy"));
-           D->setPerson(map["person"].toString());
-           D->setDensity(map["density"].toInt());
-           D->setJuice(map["juice"].toInt());
-           D->setType(map["type"].toString());
-           D->setStart(map["start"].toTime());
-           D->setEnd(map["end"].toTime());
-           D->setDimensionFrom(map["dimensionFrom"].toInt());
-           D->setDimensionTo(map["dimensionTo"].toInt());
-           D->setTemperature(map["temperature"].toFloat());
-           D->setDescription(map["description"].toString());
+           JsonWorker* jw = new JsonWorker(model, object, &mutex, nullptr);
+           jw->setAutoDelete(true);
+           pool->start(jw);
 
            emit sendCount(i+1);
-           model->addItem(D);
        }
+
+       pool->waitForDone();
     }
 
     emit workFinished();
+
 }
 
 void Worker::run()

@@ -18,6 +18,7 @@ class Model : public QAbstractTableModel
 
     QString pattern;//для подсветки поиска по комментарию
     QString report;//Текст отчёта о варке
+    QStringList lst;//список варщиков
 
 public:
     Model(QObject *parent = 0);
@@ -26,7 +27,7 @@ public:
     int Count();
     QList<Data*> *Items();
     QList<Data*> *All_Items();
-
+    QStringList defineLstPerson();
 
     void show_item(QModelIndex index);
     void selectAll();
@@ -39,6 +40,10 @@ public:
     void setItems(QList<Data*>*items);
     void setAllItems();
     void clearItems();
+
+    //Тестовые функции
+    int getCount();
+    Data *Item(int id);
 
 private:
     bool checkRegExp(QRegExp rx);

@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     application.cpp \
     showitemwindow.cpp \
     regexphighlighter.cpp \
-    worker.cpp
+    worker.cpp \
+    jsonworker.cpp
 
 HEADERS  += mainwindow.h \
     data.h \
@@ -29,7 +30,8 @@ HEADERS  += mainwindow.h \
     application.h \
     showitemwindow.h \
     regexphighlighter.h \
-    worker.h
+    worker.h \
+    jsonworker.h
 
 FORMS    += mainwindow.ui \
     showitemwindow.ui
